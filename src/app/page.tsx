@@ -19,7 +19,6 @@ function Page() {
             <span className={`inline-block p-2 rounded-lg ${m.role === 'user' ? 'bg-blue-100' : 'bg-gray-100'}`}>
               <strong>{m.role === 'user' ? 'You: ' : 'AI: '}</strong>
               <ReactMarkdown>{m.content}</ReactMarkdown>
-
             </span>
           </div>
         ))}

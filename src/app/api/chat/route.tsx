@@ -1,23 +1,28 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from "ai";
 
-
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
 const buildGoogleGenAIPrompt = (messages: Message[]) => ({
-  contents: messages
-    .filter(
-      (message) => message.role === "user" || message.role === "assistant"
-    )
-    .map((message) => ({
-      role: message.role === "user" ? "user" : "model",
+  contents: [
+    {
+      role: "user",
       parts: [
-        { text: message.content },
-        { text: "Your Name is Creative" },
+        {
+          text: "You are a helpful assistant named Creative. Always be polite and concise.",
+        },
       ],
-    })),
+    },
+    ...messages
+      .filter(
+        (message) => message.role === "user" || message.role === "assistant"
+      )
+      .map((message) => ({
+        role: message.role === "user" ? "user" : "model",
+        parts: [{ text: message.content }],
+      })),
+  ],
 });
-
 export async function POST(req: Request) {
   const { messages } = await req.json();
 
