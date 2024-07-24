@@ -1,6 +1,7 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { GoogleGenerativeAIStream, Message, StreamingTextResponse } from "ai";
 
+
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY || "");
 
 const buildGoogleGenAIPrompt = (messages: Message[]) => ({
@@ -12,7 +13,7 @@ const buildGoogleGenAIPrompt = (messages: Message[]) => ({
       role: message.role === "user" ? "user" : "model",
       parts: [
         { text: message.content },
-        { text: "your name is viraj rakholiya" },
+        { text: "Your Name is Creative" },
       ],
     })),
 });
